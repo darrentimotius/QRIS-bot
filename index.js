@@ -1,9 +1,8 @@
 import express from 'express';
 import { config } from './config.js';
-import bot, { setWebhook } from './bot.js';
+import bot, { setWebHook } from './bot.js';
 
 const app = express();
-
 app.use(express.json());
 
 app.post(config.webhookPath, (req, res) => {
@@ -12,15 +11,17 @@ app.post(config.webhookPath, (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Bot QRIS sedang berjalan!');
+  res.send('Bot QRIS (Vercel) sedang berjalan!');
 });
 
-app.listen(config.port, () => {
-  console.log(`Server berjalan di port ${config.port}`);
-  
-  if (config.token && config.qrisString && config.serverUrl) {
-    setWebhook();
-  } else {
-    console.error('VARIABEL ENVIRONMENT (TOKEN, QRIS_STRING, RENDER_URL) BELUM LENGKAP.');
+app.get('/register-webhook', async (req, res) => {
+  try {
+    await bot.setWebHook(config.webhookUrl); 
+    res.status(200).send(`Webhook berhasil di-set ke: ${config.webhookUrl}`);
+  } catch (error) {
+    console.error("Gagal set webhook:", error.message);
+    res.status(500).send(`Gagal set webhook: ${error.message}`);
   }
 });
+
+export default app;
