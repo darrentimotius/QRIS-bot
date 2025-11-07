@@ -1,4 +1,4 @@
-# qris-bot
+# QRIS-bot
 
 QRIS-bot is a Telegram bot that generates dynamic QRIS payment codes (Indonesia) from a static QRIS payload. Users send a numeric amount in chat and the bot returns a QR image for that exact amount.
 
@@ -16,11 +16,15 @@ Quick start
 
 2. Install dependencies:
 
-	npm install
+	```bash
+    npm install
+    ```
 
 3. Run the app:
 
-	node index.js
+	```bash
+    node index.js
+    ```
 
 4. Register the webhook (once your app is publicly reachable):
 
